@@ -1457,6 +1457,23 @@ export interface components {
        * @example 2021-01-06T18:40:40.000Z
        */
       created_at?: string;
+      edit_controls?: {
+        /**
+         * Format: date-time
+         * @description Time when Tweet is no longer editable.
+         * @example 2021-01-06T18:40:40.000Z
+         */
+        editable_until: string;
+        /** @description Number of times this Tweet can be edited. */
+        edits_remaining: number;
+        /**
+         * @description Indicates if this Tweet is eligible to be edited.
+         * @example false
+         */
+        is_edit_eligible: boolean;
+      };
+      /** @description A list of Tweet Ids in this Tweet chain. */
+      edit_history_tweet_ids: components["schemas"]["TweetId"][];
       entities?: components["schemas"]["FullTextEntities"];
       /** @description The location tagged on the Tweet, if the user provided one. */
       geo?: {
@@ -1545,7 +1562,8 @@ export interface components {
       | components["schemas"]["TweetDeleteComplianceSchema"]
       | components["schemas"]["TweetWithheldComplianceSchema"]
       | components["schemas"]["TweetDropComplianceSchema"]
-      | components["schemas"]["TweetUndropComplianceSchema"];
+      | components["schemas"]["TweetUndropComplianceSchema"]
+      | components["schemas"]["TweetEditComplianceSchema"];
     TweetComplianceSchema: {
       /**
        * Format: date-time
@@ -1570,6 +1588,8 @@ export interface components {
     /** @description The count for the bucket. */
     TweetCount: number;
     TweetCreateRequest: {
+      /** @description Card Uri Parameter. This is mutually exclusive from Quote Tweet Id, Poll, Media, and Direct Message Deep Link. */
+      card_uri?: string;
       /** @description Link to take the conversation from the public timeline to a private Direct Message. */
       direct_message_deep_link?: string;
       /**
@@ -1581,14 +1601,19 @@ export interface components {
       geo?: {
         place_id?: string;
       };
-      /** @description Media information being attached to created Tweet. This is mutually exclusive from Quote Tweet Id and Poll. */
+      /** @description Media information being attached to created Tweet. This is mutually exclusive from Quote Tweet Id, Poll, and Card URI. */
       media?: {
         /** @description A list of Media Ids to be attached to a created Tweet. */
         media_ids: components["schemas"]["MediaId"][];
         /** @description A list of User Ids to be tagged in the media for created Tweet. */
         tagged_user_ids?: components["schemas"]["UserId"][];
       };
-      /** @description Poll options for a Tweet with a poll. This is mutually exclusive from Media and Quote Tweet Id. */
+      /**
+       * @description Nullcasted (promoted-only) Tweets do not appear in the public timeline and are not served to followers.
+       * @default false
+       */
+      nullcast?: boolean;
+      /** @description Poll options for a Tweet with a poll. This is mutually exclusive from Media, Quote Tweet Id, and Card URI. */
       poll?: {
         /**
          * Format: int32
@@ -1634,6 +1659,22 @@ export interface components {
     };
     TweetDropComplianceSchema: {
       drop: components["schemas"]["TweetComplianceSchema"];
+    };
+    TweetEditComplianceObjectSchema: {
+      edit_tweet_ids: components["schemas"]["TweetId"][];
+      /**
+       * Format: date-time
+       * @description Event time.
+       * @example 2021-07-06T18:40:40.000Z
+       */
+      event_at: string;
+      initial_tweet_id: components["schemas"]["TweetId"];
+      tweet: {
+        id: components["schemas"]["TweetId"];
+      };
+    };
+    TweetEditComplianceSchema: {
+      tweet_edit: components["schemas"]["TweetEditComplianceObjectSchema"];
     };
     TweetHideRequest: {
       hidden: boolean;
@@ -2189,6 +2230,7 @@ export interface components {
       | "attachments.media_keys"
       | "attachments.poll_ids"
       | "author_id"
+      | "edit_history_tweet_ids"
       | "entities.mentions.username"
       | "geo.place_id"
       | "in_reply_to_user_id"
@@ -2202,6 +2244,8 @@ export interface components {
       | "context_annotations"
       | "conversation_id"
       | "created_at"
+      | "edit_controls"
+      | "edit_history_tweet_ids"
       | "entities"
       | "geo"
       | "id"

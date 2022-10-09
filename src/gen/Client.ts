@@ -108,7 +108,7 @@ export class Client {
     requestOptions?: Partial<RequestOptions>
   ) {
     this.version = "1.2.0";
-    this.twitterApiOpenApiVersion = "2.49";
+    this.twitterApiOpenApiVersion = "2.52";
     this.#auth = typeof auth === "string" ? new OAuth2Bearer(auth) : auth;
     this.#defaultRequestOptions = {
       ...requestOptions,
