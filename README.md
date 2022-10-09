@@ -1,6 +1,6 @@
 # Twitter API SDK for TypeScript
 
-## Importsnt note
+## Important note
 
 This is a fork of the oficial twitter API for Javascript / Typescript, this package was created to support stateless and serverless environments using the same functions and objects in the official API.
 
