@@ -4,6 +4,14 @@
 
 This is a fork of the oficial twitter API for Javascript / Typescript, this package was created to support stateless and serverless environments using the same functions and objects in the official API.
 
+## Install package
+
+```bash
+npm install twitter-ts-sdk
+```
+
+From here all the information belongs to the original library, it's still valid for this library.
+
 ## Introduction
 
 A TypeScript SDK for the Twitter API. This library is built with TypeScript developers in mind, but it also works with JavaScript.

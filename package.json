@@ -1,5 +1,5 @@
 {
-  "name": "twitter-api-sdk",
+  "name": "twitter-ts-sdk",
   "version": "1.2.0",
   "description": "A TypeScript SDK for the Twitter API",
   "main": "dist/index.js",
@@ -46,5 +46,21 @@
   "bugs": {
     "url": "https://github.com/twitterdev/twitter-api-typescript-sdk/issues"
   },
-  "homepage": "https://github.com/twitterdev/twitter-api-typescript-sdk#readme"
+  "homepage": "https://github.com/twitterdev/twitter-api-typescript-sdk#readme",
+  "directories": {
+    "example": "examples",
+    "test": "test"
+  },
+  "keywords": [
+    "twitter",
+    "typescript",
+    "stateless",
+    "twitter",
+    "v2.0",
+    "twitter",
+    "api",
+    "version",
+    "2"
+  ],
+  "author": "Daniel Forero"
 }
